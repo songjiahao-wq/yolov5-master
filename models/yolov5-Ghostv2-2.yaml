@@ -13,14 +13,14 @@ anchors:
 backbone:
   # [from, number, module, args]
   [[-1, 1, Conv, [32, 6, 2, 2]],  # 0-P1/2
-   [-1, 1, Conv, [48, 3, 2]],  # 1-P2/4
-   [-1, 1, GGhostRegNet, [48, 0]],
-   [-1, 1, Conv, [96, 3, 2]],  # 3-P3/8
-   [-1, 3, GGhostRegNet, [96, 1]],
-   [-1, 1, Conv, [240, 3, 2]],  # 5-P4/16
-   [-1, 5, GGhostRegNet, [240, 2]],
-   [-1, 1, Conv, [528, 3, 2]],  # 7-P5/32
-   [-1, 7, GGhostRegNet, [528, 3]],
+   [-1, 1, Conv, [24, 3, 2]],  # 1-P2/4
+   [-1, 1, GGhostRegNet, [24, 0]],
+   [-1, 1, Conv, [56, 3, 2]],  # 3-P3/8
+   [-1, 1, GGhostRegNet, [56, 1]],
+   [-1, 1, Conv, [152, 3, 2]],  # 5-P4/16
+   [-1, 4, GGhostRegNet, [152, 2]],
+   [-1, 1, Conv, [368, 3, 2]],  # 7-P5/32
+   [-1, 7, GGhostRegNet, [368, 3]],
    [-1, 1, SPPF, [512, 5]],  # 9
   ]
 

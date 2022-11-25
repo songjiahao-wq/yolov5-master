@@ -1,7 +1,12 @@
+"""
+YOLO的自适应改变图片机制，可以预先改变图片的大小
+"""
+import os.path
+
 import cv2
 import numpy as np
 import glob
-def letterbox(im, new_shape=(640, 780), color=(114, 114, 114), auto=True, scaleFill=False, scaleup=True, stride=32):
+def letterbox(im, new_shape=(640, 640), color=(114, 114, 114), auto=True, scaleFill=False, scaleup=True, stride=32):
     # Resize and pad image while meeting stride-multiple constraints
     shape = im.shape[:2]  # current shape [height, width]
     if isinstance(new_shape, int):
@@ -34,14 +39,20 @@ def letterbox(im, new_shape=(640, 780), color=(114, 114, 114), auto=True, scaleF
     left, right = int(round(dw - 0.1)), int(round(dw + 0.1))
     im = cv2.copyMakeBorder(im, top, bottom, left, right, cv2.BORDER_CONSTANT, value=color)  # add border
     return im, ratio, (dw, dh)
-
+# 图片源路径
 img_path = r'D:\my_job\code\xianyu\yolov5-master\data\images/*.jpg'
+# 复制文件总路径
+src_root = r'D:\my_job\code\xianyu\yolov5-master\data\images2/'
+if not os.path.exists(src_root):
+    os.makedirs(src_root)
 img_list = glob.glob(img_path)
+img_number = 0
 for img_name in img_list:
+    img_number +=1
+    print(img_number)
     img = cv2.imread(img_name)
-
     print(img.shape)
     img2 = letterbox(img)[0]
     print(img2.shape)
-    print(img_name.replace('images', 'images2'))
-    cv2.imwrite(img_name.replace('images', 'images2'),img2)
+    # print(src_root+os.path.basename(img_name))
+    cv2.imwrite(src_root+os.path.basename(img_name),img2)
