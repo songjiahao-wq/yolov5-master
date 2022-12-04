@@ -1583,7 +1583,8 @@ class GHOSTBottleneck(nn.Module):
         self.bn2 = norm_layer(width)
         self.conv3 = conv1x1(width, planes)
         self.bn3 = norm_layer(planes)
-        self.relu = nn.ReLU(inplace=True)
+        self.relu = nn.SiLU(inplace=True)
+
         self.downsample = downsample
         self.stride = stride
 
@@ -1657,7 +1658,7 @@ class Stage(nn.Module):
             nn.Conv2d(planes + raw_planes * (blocks - 2), cheap_planes,
                       kernel_size=1, stride=1, bias=False),
             nn.BatchNorm2d(cheap_planes),
-            nn.ReLU(inplace=True),
+            nn.SiLU(inplace=True),
             nn.Conv2d(cheap_planes, cheap_planes, kernel_size=1, bias=False),
             nn.BatchNorm2d(cheap_planes),
         )
@@ -1666,7 +1667,7 @@ class Stage(nn.Module):
                       kernel_size=1, stride=1, bias=False),
             nn.BatchNorm2d(cheap_planes),
         )
-        self.cheap_relu = nn.ReLU(inplace=True)
+        self.cheap_relu = nn.SiLU(inplace=True)
 
         layers = []
         # downsample = nn.Sequential(
@@ -1716,7 +1717,7 @@ class GGhostRegNet(nn.Module):
             norm_layer = nn.BatchNorm2d
         self._norm_layer = norm_layer
 
-        self.inplanes = 24
+        self.inplanes = widths[0]
         self.dilation = 1
         if replace_stride_with_dilation is None:
             # each element in the tuple indicates if we should replace
